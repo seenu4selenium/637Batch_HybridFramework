@@ -1,13 +1,26 @@
 package com.utilities;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.ITestResult;
+
 import com.objectrepository.Locators;
 
 public class CommonFunctions {
@@ -15,6 +28,10 @@ public class CommonFunctions {
 	public static WebDriver driver;
 	public FileInputStream fi;
 	public String propertyFile = "QA_TD.properties";
+	public String screenshotPath;
+	public String className;
+	public String methodName;
+	public String projectDir = System.getProperty("user.dir");
 
 	public Locators loc = new Locators();
 	public Properties p = new Properties();
@@ -48,10 +65,10 @@ public class CommonFunctions {
 			if (element.isEnabled()) {
 				System.out.println("Given locator is enable state ***");
 				// Clear any existing data
-				// highlightElement(element);
+				highlightElement(element);
 				element.clear();
 				// Send the test data to Edit box
-				// highlightElement(element);
+				highlightElement(element);
 				element.sendKeys(p.getProperty(inputdata));
 			} else {
 				System.out.println("Given locator is not enable state on DOM(Current page***");
@@ -74,7 +91,7 @@ public class CommonFunctions {
 			// Check your element is in enable state?
 			if (element.isEnabled()) {
 				// Click on Button/radiobutton/checkbox/Link...
-				// highlightElement(element);
+				highlightElement(element);
 				element.click();
 			} else {
 				System.out.println("Given locator is not enable state on DOM(Current page***");
@@ -82,6 +99,177 @@ public class CommonFunctions {
 		} else {
 			System.out.println("Given locator is not displayed on DOM(Current page***");
 		}
+	}
+
+	public void clickUsingJavaScript(By locator) throws Exception {
+		WebElement element = driver.findElement(locator);
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+		highlightElement(element);
+		executor.executeScript("arguments[0].click();", element);
+	}
+
+	public void highlightElement(WebElement element) throws InterruptedException {
+		((JavascriptExecutor) driver).executeScript("arguments[0].style.border='6px groove green'", element);
+		Thread.sleep(1000);
+		// ((JavascriptExecutor) driver).executeScript("arguments[0].style.border=''",
+		// element);
+	}
+
+	/*********** timestamp **********/
+	public String timestamp() {
+		Date d = new Date();
+		DateFormat df = new SimpleDateFormat("ddMMMyyy_HHmmss");
+		String timeTamp = df.format(d);
+		return timeTamp;
+	}
+
+	/*****
+	 * takescreenshot
+	 * 
+	 * @throws Exception
+	 ************/
+	public void takeScreenshot(String name) throws Exception {
+		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		String screenshotPath = ".\\Screenshots\\";
+		FileHandler.copy(scrFile, new File(screenshotPath + name + "_" + timestamp() + ".PNG"));
+		System.out.println("Screenshot taken*** ");
+	}
+
+	public void screenshotWithStatus(ITestResult res) throws Exception {
+		projectDir = System.getProperty("user.dir");
+		screenshotPath = projectDir + "\\Screenshots\\";
+		className = res.getTestClass().getName().trim();
+		methodName = res.getName().trim();
+		// STATUS_PackageName.ClassName_MethodName_Timestamp.PNG
+		if (res.getStatus() == ITestResult.SUCCESS) {
+			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			FileHandler.copy(scrFile,
+					new File(screenshotPath + "PASS_" + className + "_" + methodName + "_" + timestamp() + ".PNG"));
+		}
+		if (res.getStatus() == ITestResult.FAILURE) {
+			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			FileHandler.copy(scrFile,
+					new File(screenshotPath + "FAIL_" + className + "_" + methodName + "_" + timestamp() + ".PNG"));
+		}
+
+	}
+
+	/****************** Dropdown selection **************************************/
+
+	public void selectByVisibleText(By locater, String visibleText) {
+
+		WebElement element = driver.findElement(locater);
+		if (element.isDisplayed()) {
+			if (element.isEnabled()) {
+				Select dropdown = new Select(element);
+				dropdown.selectByVisibleText(visibleText);
+			} else {
+				System.out.println("The webelement is NOT Enabled, please check**************");
+			}
+		} else {
+			System.out.println("The webelement is NOT displayed, please check**************");
+		}
+
+	}
+
+	public void selectByIndex(By locater, int index) {
+		WebElement element = driver.findElement(locater);
+		if (element.isDisplayed()) {
+			// isEnabled()
+			if (element.isEnabled()) {
+				Select dropdown = new Select(element);
+				dropdown.selectByIndex(index);
+			} else {
+				System.out.println("The webelement is NOT Enabled, please check**************");
+			}
+		} else {
+			System.out.println("The webelement is NOT displayed, please check**************");
+		}
+
+	}
+
+	public void selectByValue(By locater, String value) {
+		WebElement element = driver.findElement(locater);
+		if (element.isDisplayed()) {
+			// isEnabled()
+			if (element.isEnabled()) {
+				Select dropdown = new Select(element);
+				dropdown.selectByValue(value);
+			} else {
+				System.out.println("The webelement is NOT Enabled, please check**************");
+			}
+		} else {
+			System.out.println("The webelement is NOT displayed, please check**************");
+		}
+
+	}
+
+	public void printAllDropdownValues(By locater) {
+		WebElement element = driver.findElement(locater);
+
+		if (element.isDisplayed()) {
+			// isEnabled()
+			if (element.isEnabled()) {
+				Select dropdown = new Select(element);
+				List<WebElement> dropdownValues = dropdown.getOptions();
+				// Print the size of dropdown values
+				System.out.println(dropdownValues.size());
+				// Print the dropdown values
+				for (int i = 0; i < dropdownValues.size(); i++) {
+					System.out.println(dropdownValues.get(i).getText());
+				}
+			} else {
+				System.out.println("The webelement is NOT Enabled, please check**************");
+			}
+		} else {
+			System.out.println("The webelement is NOT displayed, please check**************");
+		}
+
+	}
+
+	public void selectCustomiseOptionFromTheDropdownValues(By locater, String visibleText) {
+		WebElement element = driver.findElement(locater);
+		if (element.isDisplayed()) {
+			// isEnabled()
+			if (element.isEnabled()) {
+
+				Select dropdown = new Select(element);
+				List<WebElement> dropdownValues = dropdown.getOptions();
+				// Print the size of dropdown values
+				System.out.println(dropdownValues.size());
+				// Print the dropdown values
+				for (int i = 0; i < dropdownValues.size(); i++) {
+					System.out.println(dropdownValues.get(i).getText());
+
+					// Select Aug option from the dropdown
+					if (dropdownValues.get(i).getText().equals(visibleText)) {
+						dropdown.selectByIndex(i);
+						break;
+					}
+				}
+
+			} else {
+				System.out.println("The webelement is NOT Enabled, please check**************");
+			}
+		} else {
+			System.out.println("The webelement is NOT displayed, please check**************");
+		}
+
+	}
+
+	/************** Alert Handle *************************/
+	public void alertHandleByAccept() {
+		Alert alert = driver.switchTo().alert();
+		String alertText = alert.getText();
+		System.out.println("Alert text is: " + alertText);
+		alert.accept();
+	}
+
+	public void alertHandleByDismiss() {
+		Alert alert = driver.switchTo().alert();
+		String alertText = alert.getText();
+		System.out.println("Alert text is: " + alertText);
+		alert.dismiss();
 	}
 
 }

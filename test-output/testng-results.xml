@@ -1,93 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="0" failed="0" skipped="1">
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-02-11T19:01:31 CST" name="Default suite" finished-at="2023-02-11T19:01:31 CST" duration-ms="59">
+  <suite started-at="2023-02-13T19:28:03 CST" name="Default suite" finished-at="2023-02-13T19:28:23 CST" duration-ms="19927">
     <groups>
     </groups>
-    <test started-at="2023-02-11T19:01:31 CST" name="Default test" finished-at="2023-02-11T19:01:31 CST" duration-ms="59">
-      <class name="com.testscenarios.JRI_Signin">
-        <test-method is-config="true" signature="browserLaunch(java.lang.String)[pri:0, instance:com.testscenarios.JRI_Signin@644baf4a]" started-at="2023-02-11T19:01:31 CST" name="browserLaunch" finished-at="1969-12-31T18:00:00 CST" duration-ms="-1676163691608" status="FAIL">
-          <exception class="org.testng.TestNGException">
-            <message>
-              <![CDATA[
-Parameter 'browserName' is required by BeforeClass on method browserLaunch but has not been marked @Optional or defined
-in C:\Users\nalla\AppData\Local\Temp\testng-eclipse--1171574362\testng-customsuite.xml]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[org.testng.TestNGException: 
-Parameter 'browserName' is required by BeforeClass on method browserLaunch but has not been marked @Optional or defined
-in C:\Users\nalla\AppData\Local\Temp\testng-eclipse--1171574362\testng-customsuite.xml
-at org.testng.internal.Parameters.createParams(Parameters.java:267)
-at org.testng.internal.Parameters.createParametersForMethod(Parameters.java:355)
-at org.testng.internal.Parameters.createParameters(Parameters.java:684)
-at org.testng.internal.Parameters.createConfigurationParameters(Parameters.java:166)
-at org.testng.internal.invokers.ConfigInvoker.invokeConfigurations(ConfigInvoker.java:277)
-at org.testng.internal.invokers.TestMethodWorker.invokeBeforeClassMethods(TestMethodWorker.java:180)
-at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:122)
-at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-at org.testng.TestRunner.privateRun(TestRunner.java:829)
-at org.testng.TestRunner.run(TestRunner.java:602)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:437)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:431)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:391)
-at org.testng.SuiteRunner.run(SuiteRunner.java:330)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1256)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1176)
-at org.testng.TestNG.runSuites(TestNG.java:1099)
-at org.testng.TestNG.run(TestNG.java:1067)
-at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
-at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-]]>
-            </full-stacktrace>
-          </exception> <!-- org.testng.TestNGException -->
+    <test started-at="2023-02-13T19:28:03 CST" name="Default test" finished-at="2023-02-13T19:28:23 CST" duration-ms="19927">
+      <class name="com.testscenarios.AlertHandle">
+        <test-method is-config="true" signature="browserLaunch(java.lang.String)[pri:0, instance:com.testscenarios.AlertHandle@470734c3]" started-at="2023-02-13T19:28:03 CST" name="browserLaunch" finished-at="2023-02-13T19:28:07 CST" duration-ms="3354" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Firefox]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- browserLaunch -->
-        <test-method signature="f()[pri:0, instance:com.testscenarios.JRI_Signin@644baf4a]" started-at="2023-02-11T19:01:31 CST" name="f" finished-at="2023-02-11T19:01:31 CST" duration-ms="0" status="SKIP">
-          <exception class="org.testng.TestNGException">
-            <message>
-              <![CDATA[
-Parameter 'browserName' is required by BeforeClass on method browserLaunch but has not been marked @Optional or defined
-in C:\Users\nalla\AppData\Local\Temp\testng-eclipse--1171574362\testng-customsuite.xml]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[org.testng.TestNGException: 
-Parameter 'browserName' is required by BeforeClass on method browserLaunch but has not been marked @Optional or defined
-in C:\Users\nalla\AppData\Local\Temp\testng-eclipse--1171574362\testng-customsuite.xml
-at org.testng.internal.Parameters.createParams(Parameters.java:267)
-at org.testng.internal.Parameters.createParametersForMethod(Parameters.java:355)
-at org.testng.internal.Parameters.createParameters(Parameters.java:684)
-at org.testng.internal.Parameters.createConfigurationParameters(Parameters.java:166)
-at org.testng.internal.invokers.ConfigInvoker.invokeConfigurations(ConfigInvoker.java:277)
-at org.testng.internal.invokers.TestMethodWorker.invokeBeforeClassMethods(TestMethodWorker.java:180)
-at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:122)
-at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-at org.testng.TestRunner.privateRun(TestRunner.java:829)
-at org.testng.TestRunner.run(TestRunner.java:602)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:437)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:431)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:391)
-at org.testng.SuiteRunner.run(SuiteRunner.java:330)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1256)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1176)
-at org.testng.TestNG.runSuites(TestNG.java:1099)
-at org.testng.TestNG.run(TestNG.java:1067)
-at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
-at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-]]>
-            </full-stacktrace>
-          </exception> <!-- org.testng.TestNGException -->
+        <test-method signature="f()[pri:0, instance:com.testscenarios.AlertHandle@470734c3]" started-at="2023-02-13T19:28:07 CST" name="f" finished-at="2023-02-13T19:28:23 CST" duration-ms="16373" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- f -->
-      </class> <!-- com.testscenarios.JRI_Signin -->
+        <test-method is-config="true" signature="takescreenshot(org.testng.ITestResult)[pri:0, instance:com.testscenarios.AlertHandle@470734c3]" started-at="2023-02-13T19:28:23 CST" name="takescreenshot" finished-at="2023-02-13T19:28:23 CST" duration-ms="163" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=f status=SUCCESS method=AlertHandle.f()[pri:0, instance:com.testscenarios.AlertHandle@470734c3] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takescreenshot -->
+      </class> <!-- com.testscenarios.AlertHandle -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

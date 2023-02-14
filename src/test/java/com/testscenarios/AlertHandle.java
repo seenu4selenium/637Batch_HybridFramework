@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -22,7 +23,7 @@ import org.testng.annotations.Test;
 
 import com.utilities.CommonFunctions;
 
-public class Classtemplate extends CommonFunctions {
+public class AlertHandle extends CommonFunctions {
 
 	@Parameters("browserName")
 	@BeforeClass
@@ -46,8 +47,19 @@ public class Classtemplate extends CommonFunctions {
 	}
 
 	@Test
-	public void f() {
-		// Develop the script from here
+	public void f() throws Exception {
+		driver.get("https://demoqa.com/alerts");
+		clickByAnyLocator(By.id("alertButton"));
+		Thread.sleep(5000);
+		//Alert handle
+		alertHandleByAccept();
+		System.out.println("*********************");
+		clickByAnyLocator(By.id("confirmButton"));
+		Thread.sleep(5000);
+		//Alert handle : click on Cancle button on Alert
+		alertHandleByDismiss();
+		
+		
 
 	}
 

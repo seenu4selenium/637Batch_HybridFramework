@@ -12,9 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
-import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
@@ -22,7 +20,7 @@ import org.testng.annotations.Test;
 
 import com.utilities.CommonFunctions;
 
-public class Classtemplate extends CommonFunctions {
+public class Sreenivas_Assignment extends CommonFunctions {
 
 	@Parameters("browserName")
 	@BeforeClass
@@ -40,13 +38,19 @@ public class Classtemplate extends CommonFunctions {
 		driver.manage().window().maximize();
 	}
 
-	@AfterMethod
-	public void takescreenshot(ITestResult res) throws Exception {
-		screenshotWithStatus(res);
+	@AfterClass
+	public void takescreenshot() throws Exception {
+		takeScreenshot("Sreenivas_Assignment");
 	}
 
 	@Test
 	public void f() {
+		// Develop the script from here
+
+	}
+
+	@Test
+	public void g() {
 		// Develop the script from here
 
 	}

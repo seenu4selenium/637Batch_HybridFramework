@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
@@ -33,22 +35,25 @@ public class JRI_Signin extends CommonFunctions {
 		driver.manage().deleteAllCookies();
 		driver.manage().window().maximize();
 	}
-	
+
 	@Test
-	public void f() throws Exception {
-		
-		//chromeBrowserLaunch();
+	public void tc_01_openJRIapplication() throws Exception {
 		getURL("JRI_Signin");
+		System.out.println("JRI App opened successfully");
+	}
+
+	@Test
+	public void tc_02_invalidLoginToJRI() throws Exception {
 		sendKeysByAnyLocator(loc.jriSigninPage_EmailEditbox, "Email");
 		sendKeysByAnyLocator(loc.jriSigninPage_PasswordEditbox, "Password");
 		sendKeysByAnyLocator(loc.jriSigninPage_CaptchaEditbox, "Captcha");
 		clickByAnyLocator(loc.jriSigninPage_SecureSigninButton);
+		System.out.println("invalid Login  test case done");
 
-		// driver.get(p.getProperty("JRI_Signin"));
-		// driver.findElement(loc.jriSigninPage_EmailEditbox).sendKeys(p.getProperty("Email"));
-		// driver.findElement(loc.jriSigninPage_PasswordEditbox).sendKeys(p.getProperty("Password"));
-		// driver.findElement(loc.jriSigninPage_CaptchaEditbox).sendKeys(p.getProperty("Captcha"));
-		// driver.findElement(loc.jriSigninPage_SecureSigninButton).click();
+	}
 
+	@AfterMethod
+	public void am(ITestResult res) throws Exception {
+		screenshotWithStatus(res);
 	}
 }

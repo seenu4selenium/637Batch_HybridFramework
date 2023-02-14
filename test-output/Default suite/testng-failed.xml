@@ -5,8 +5,9 @@
     <classes>
       <class name="com.testscenarios.JRI_Signin">
         <methods>
-          <include name="f"/>
           <include name="browserLaunch"/>
+          <include name="tc_02_invalidLoginToJRI"/>
+          <include name="am"/>
         </methods>
       </class> <!-- com.testscenarios.JRI_Signin -->
     </classes>

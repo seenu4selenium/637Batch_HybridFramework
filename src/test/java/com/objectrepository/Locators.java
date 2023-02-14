@@ -19,7 +19,7 @@ public class Locators {
 	// JRI locators
 	public final By jriSigninPage_EmailEditbox = By.name("txtUserName");
 	public final By jriSigninPage_PasswordEditbox = By.name("txtPasswd");
-	public final By jriSigninPage_CaptchaEditbox = By.name("txtCaptcha");
+	public final By jriSigninPage_CaptchaEditbox = By.name("txtCaptcha1");
 	public final By jriSigninPage_SecureSigninButton = By.name("imgbtnSignin");
 
 }
