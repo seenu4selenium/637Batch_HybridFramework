@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -18,7 +19,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 
 import com.objectrepository.Locators;
@@ -53,7 +56,7 @@ public class CommonFunctions {
 	 * 
 	 * @throws Exception
 	 ************************/
-	public void sendKeysByAnyLocator(By locator, String inputdata) throws Exception {
+	public void sendKeysByAnyLocatorWithProp(By locator, String inputdata) throws Exception {
 		fi = new FileInputStream(".\\src\\test\\resources\\testdata\\" + propertyFile);
 		p.load(fi);
 
@@ -78,6 +81,27 @@ public class CommonFunctions {
 		}
 	}
 
+	public void sendKeysByAnyLocator(By locator, String inputdata) throws Exception {	
+		WebElement element = driver.findElement(locator);
+
+		// Check your locator is displayed?
+		if (driver.findElements(locator).size() > 0) {
+			// Check your element is in enable state?
+			if (element.isEnabled()) {
+				System.out.println("Given locator is enable state ***");
+				// Clear any existing data
+				highlightElement(element);
+				element.clear();
+				// Send the test data to Edit box
+				highlightElement(element);
+				element.sendKeys(inputdata);
+			} else {
+				System.out.println("Given locator is not enable state on DOM(Current page***");
+			}
+		} else {
+			System.out.println("Given locator is not displayed on DOM(Current page***");
+		}
+	}
 	/*******
 	 * Click
 	 * 
@@ -271,5 +295,58 @@ public class CommonFunctions {
 		System.out.println("Alert text is: " + alertText);
 		alert.dismiss();
 	}
+
+	// Scrolling down the page till the element is found
+	public void scrollIntoView(By locator) {
+		WebElement element = driver.findElement(locator);
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView();", element);
+		System.out.println("Page scroll done");
+
+	}
+
+	/************ waits in selenium ***********************/
+	public void implicitWait(int time) {
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(time));
+		System.out.println("Implicit wait method used***");
+	}
+
+	public void explicitWaitVisibilityOf(By locator, int timeinSeconds) {
+		WebElement element = driver.findElement(locator);
+		System.out.println("using explicitWaitVisibilityOf ****");
+		WebDriverWait ww = new WebDriverWait(driver, Duration.ofSeconds(timeinSeconds));
+		ww.until(ExpectedConditions.visibilityOf(element));
+	}
+
+	public void explicitWaitElementToBeClickable(By locator, int timeinSeconds) {
+		WebElement element = driver.findElement(locator);
+		System.out.println("using explicitWaitElementToBeClickable ****");
+		WebDriverWait ww = new WebDriverWait(driver, Duration.ofSeconds(timeinSeconds));
+		ww.until(ExpectedConditions.elementToBeClickable(element));
+	}
+
+	public void explicitWaiTeltextToBePresentInElement(By locator, String expectedText, int timeinSeconds) {
+		WebElement element = driver.findElement(locator);
+		WebDriverWait ww = new WebDriverWait(driver, Duration.ofSeconds(timeinSeconds));
+		ww.until(ExpectedConditions.textToBePresentInElement(element, expectedText));
+	}
+
+	/***
+	 * instead of fluent wait use customized While loop statement**@throws Exception
+	 *****/
+	public void waitforElement(By locater) throws Exception {
+		int i = 0;
+		while (driver.findElements(locater).size() < 1) {
+			Thread.sleep(500);
+			System.out.println("Wait for the element***************");			
+			if (i > 30) {
+				System.out.println("Element is not present");
+				break;
+			}
+			i++;
+		}
+	}
+	
+	
 
 }
