@@ -6,18 +6,24 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Properties;
+import java.util.Scanner;
+import java.util.Set;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -38,6 +44,8 @@ public class CommonFunctions {
 
 	public Locators loc = new Locators();
 	public Properties p = new Properties();
+	public Scanner s = new Scanner(System.in);
+	public Actions actions;
 
 	public void chromeBrowserLaunch() {
 		driver = new ChromeDriver();
@@ -81,7 +89,7 @@ public class CommonFunctions {
 		}
 	}
 
-	public void sendKeysByAnyLocator(By locator, String inputdata) throws Exception {	
+	public void sendKeysByAnyLocator(By locator, String inputdata) throws Exception {
 		WebElement element = driver.findElement(locator);
 
 		// Check your locator is displayed?
@@ -102,6 +110,7 @@ public class CommonFunctions {
 			System.out.println("Given locator is not displayed on DOM(Current page***");
 		}
 	}
+
 	/*******
 	 * Click
 	 * 
@@ -338,7 +347,7 @@ public class CommonFunctions {
 		int i = 0;
 		while (driver.findElements(locater).size() < 1) {
 			Thread.sleep(500);
-			System.out.println("Wait for the element***************");			
+			System.out.println("Wait for the element***************");
 			if (i > 30) {
 				System.out.println("Element is not present");
 				break;
@@ -346,7 +355,128 @@ public class CommonFunctions {
 			i++;
 		}
 	}
-	
-	
 
+	/***********
+	 * SwithchToWindow using Tab then close the New Tab againg back to Parent Window
+	 * 
+	 * @throws Exception
+	 ***************************/
+	public void switchAndCloseNewTab() throws Exception {
+		// Get the current window handle
+		String parentWindow = driver.getWindowHandle();
+		// Switch to New tab [chilld window]
+		ArrayList<String> allTabs = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(allTabs.get(1));
+		Thread.sleep(5000);
+		// Close the newly Opened Window[chilld window]
+		driver.close();
+		// Switch back to original window[parentWindow]
+		driver.switchTo().window(parentWindow);
+	}
+
+	/************
+	 * popupHandle
+	 * 
+	 * @throws InterruptedException
+	 *********************************/
+	public void popupHandleToCloseChildWindow() throws InterruptedException {
+		// get the main windown name
+		String mainWindowName = driver.getWindowHandle();
+		System.out.println("mainWindowName:" + mainWindowName);
+
+		Set<String> allWindowNames = driver.getWindowHandles();// 4
+		System.out.println("allWindowNames:" + allWindowNames);
+
+		// Close the child window (popups)
+		// for (int i = 0; i < array.length; i++) { }
+		for (String string : allWindowNames) {
+			// validate the window name is parent window /Child window?
+			if (!mainWindowName.equals(string)) {
+				// switch to child window
+				driver.switchTo().window(string);
+				Thread.sleep(3000);
+				// Close my child window
+				driver.close();
+			}
+		}
+		// move cursor point to back to mainwindow
+		driver.switchTo().window(mainWindowName);
+	}
+
+	public void navigateToPopupWindow() throws InterruptedException {
+		// get the main windown name
+		String mainWindowName = driver.getWindowHandle();
+		System.out.println("mainWindowName:" + mainWindowName);
+
+		Set<String> allWindowNames = driver.getWindowHandles();// 4
+		System.out.println("allWindowNames:" + allWindowNames);
+
+		// Close the child window (popups)
+		// for (int i = 0; i < array.length; i++) { }
+		for (String string : allWindowNames) {
+			// validate the window name is parent window /Child window?
+			if (!mainWindowName.equals(string)) {
+				// switch to child window
+				driver.switchTo().window(string);
+				Thread.sleep(3000);
+			}
+		}
+
+	}
+
+	/************************* Actions in Selenium ************/
+
+	public void rightClick(By locator) {
+		try {
+			actions = new Actions(driver);
+			WebElement element = driver.findElement(locator);			
+			actions.contextClick(element);
+			actions.click().build().perform();
+		} catch (Exception e) {
+			System.out.println("Error in description: " + e.getStackTrace());
+		}
+	}
+
+	public void doubleClick(By locator) {
+		try {
+			actions = new Actions(driver);
+			WebElement element = driver.findElement(locator);
+			actions.doubleClick(element);
+			actions.click().build().perform();
+		} catch (Exception e) {
+			System.out.println("Error in description: " + e.getStackTrace());
+		}
+	}
+	public void moveToOnElement(By locator) {
+		try {
+			WebElement element = driver.findElement(locator);
+			actions = new Actions(driver);
+			actions.moveToElement(element);
+			actions.click().build().perform();
+		} catch (Exception e) {
+			System.out.println("Error in description: " + e.getStackTrace());
+		}
+	}
+
+	public void dragandDrop(By sourceelementLocator, By destinationelementLocator) {
+		try {
+			WebElement sourceElement = driver.findElement(sourceelementLocator);
+			WebElement destinationElement = driver.findElement(destinationelementLocator);
+
+			if (sourceElement.isDisplayed() && destinationElement.isDisplayed()) {
+				Actions action = new Actions(driver);
+				action.dragAndDrop(sourceElement, destinationElement).build().perform();
+			} else {
+				System.out.println("Element(s) was not displayed to drag / drop");
+			}
+		} catch (StaleElementReferenceException e) {
+			System.out.println("Element with " + sourceelementLocator + "or" + destinationelementLocator
+					+ "is not attached to the page document " + e.getStackTrace());
+		} catch (NoSuchElementException e) {
+			System.out.println("Element " + sourceelementLocator + "or" + destinationelementLocator
+					+ " was not found in DOM " + e.getStackTrace());
+		} catch (Exception e) {
+			System.out.println("Error occurred while performing drag and drop operation " + e.getStackTrace());
+		}
+	}
 }

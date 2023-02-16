@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.testscenarios.WaitsInSelenium">
+      <class name="com.testscenarios.JRI_Signin">
         <methods>
           <include name="browserLaunch"/>
-          <include name="f"/>
-          <include name="takescreenshot"/>
+          <include name="tc_03_recharge"/>
+          <include name="am"/>
         </methods>
-      </class> <!-- com.testscenarios.WaitsInSelenium -->
+      </class> <!-- com.testscenarios.JRI_Signin -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
