@@ -3,13 +3,12 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.testscenarios.JRI_Signin">
+      <class name="com.testscenarios.FBloginExcel">
         <methods>
+          <include name="f"/>
           <include name="browserLaunch"/>
-          <include name="tc_03_recharge"/>
-          <include name="am"/>
         </methods>
-      </class> <!-- com.testscenarios.JRI_Signin -->
+      </class> <!-- com.testscenarios.FBloginExcel -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
